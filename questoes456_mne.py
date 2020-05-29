@@ -29,15 +29,15 @@ if metodo == 1:
         xbarra = (a + b) / 2
         i = 0
         while (abs(f(xbarra)) > erro) or (abs(b - a) > erro):
-            i = i + 1
             if (f(a) * f(xbarra)) < 0:
                 b = xbarra
                 xbarra = (a + b) / 2
-            if (f(b) * f(xbarra)) < 0:
+            else:
                 a = xbarra
                 xbarra = (a + b) / 2
+            i = i + 1
             
-        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
+        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
     else:
         print("Não há raíz")
 
@@ -54,36 +54,36 @@ if metodo == 2:
         xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
         i = 0
         while (((f(a) * f(a+erro)) < 0) and ((f(b) * f(b+erro)) < 0)) or (abs(f(xbarra)) > erro):
-            i = i + 1
             if (f(a) * f(xbarra)) < 0:
                 b = xbarra
                 xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
-            if (f(b) * f(xbarra)) < 0:
+            else:
                 a = xbarra
                 xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
+            i = i + 1
             
-        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
+        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
     else:
         print("Não há raíz")
 
-# Método da Ponto Fixo
+# Método do Ponto Fixo
 if metodo == 3:
     # Função estudada
     def f(x):
-        return 10.10*x**4 - 5.12*x**3 + 9.18*x**2 - 5.84*x - 5.66
+        return (10.10*x**4) - (5.12*x**3) + (9.18*x**2) - (5.84*x) - 5.66
     
     def fder(x):
-        return 40.40*x**3 - 15.36*x**2 + 18.36*x - 5.84
+        return (40.40*x**3) - (15.36*x**2) + (18.36*x) - 5.84
     
     def q(x):
         return x - (f(x) / fder(x))
     
     erro = 10**-3 # De acordo com a precisão requerida
     i = 0
-    while ((f(a) * f(a-erro)) > 0):
+    while ((f(b) * f(b-erro)) > 0) or (abs(f(b)) > erro):
+        b = q(b)
         i = i + 1
-        a = q(a)
     
-    print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
+    print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
     
     
