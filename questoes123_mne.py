@@ -20,7 +20,7 @@ metodo = int(input("Selecione 1 para Bisseção, 2 para Posição Falsa e 3 para
 if metodo == 1:
     # Função estudada
     def f(x):
-        return 108 + 222.1 * (1 - math.exp(-11.4 * x)) - 300
+        return 108 + (221.1 * (1 - math.exp(-11.4 * x))) - 300
     
     # Teorema de Bolzano
     if (f(a) * f(b)) < 0:
@@ -29,15 +29,14 @@ if metodo == 1:
         xbarra = (a + b) / 2
         i = 0
         while (abs(f(xbarra)) > erro) or (abs(b - a) > erro):
-            i = i + 1
             if (f(a) * f(xbarra)) < 0:
                 b = xbarra
                 xbarra = (a + b) / 2
-            if (f(b) * f(xbarra)) < 0:
+            else:
                 a = xbarra
                 xbarra = (a + b) / 2
-            
-        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
+            i = i + 1
+        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
     else:
         print("Não há raíz")
 
@@ -45,7 +44,7 @@ if metodo == 1:
 if metodo == 2:
     # Função estudada
     def f(x):
-        return 108 + 222.1 * (1 - math.exp(-11.4 * x)) - 300
+        return 108 + 221.1 * (1 - math.exp(-11.4 * x)) - 300
     
     # Teorema de Bolzano
     if (f(a) * f(b)) < 0:
@@ -54,15 +53,15 @@ if metodo == 2:
         xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
         i = 0
         while (((f(a) * f(a+erro)) < 0) and ((f(b) * f(b+erro)) < 0)) or (abs(f(xbarra)) > erro):
-            i = i + 1
             if (f(a) * f(xbarra)) < 0:
                 b = xbarra
                 xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
-            if (f(b) * f(xbarra)) < 0:
+            else:
                 a = xbarra
                 xbarra = ((a * f(b)) - (b * f(a))) / (f(b) - f(a))
+            i = i + 1
             
-        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
+        print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
     else:
         print("Não há raíz")
 
@@ -70,20 +69,18 @@ if metodo == 2:
 if metodo == 3:
     # Função estudada
     def f(x):
-        return 108 + 222.1 * (1 - math.exp(-11.4 * x)) - 300
+        return 108 + 221.1 * (1 - math.exp(-11.4 * x)) - 300
     
     def fder(x):
-        return 2531.94 * math.exp(-11.4 * x)
+        return 2520.54 * math.exp(-11.4 * x)
     
     def q(x):
         return x - (f(x) / fder(x))
     
     erro = 10**-3 # De acordo com a precisão requerida
     i = 0
-    while ((f(a) * f(a-erro)) > 0):
-        i = i + 1
+    while ((f(a) * f(a+erro)) > 0) or (abs(f(a)) > erro):
         a = q(a)
+        i = i + 1
     
-    print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d}".format(xbarra,i))
-    
-    
+    print("A raíz da equação no intervalo definido é {:.8f} e obteve {:d} iterações".format(xbarra,i))
