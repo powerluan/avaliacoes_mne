@@ -1,0 +1,92 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun May 31 11:52:03 2020
+
+@author: Luan Moreira
+
+MÉTODOS PARA RESOLUÇÃO DE SISTEMAS LINEARES
+"""
+
+import numpy as np
+import math
+
+## ELIMINAÇÃO DE GAUSS ###
+
+# Cria uma matriz extendida
+def cria_matriz_ext(num_linhas, num_colunas):
+    matriz = np.zeros((num_linhas,num_colunas), dtype=np.float64)
+    
+    for i in range(num_linhas):
+        for j in range(num_colunas):
+            valor = float(input("Informe o valor do elemento {:d}-{:d}: ".format(i+1,j+1)))
+            matriz[i,j] = valor
+        
+    print("---------------------------------------------------")
+    print("A matriz extendida é:\n",matriz)
+    print("---------------------------------------------------")
+    
+    return matriz
+
+# Eliminação de Gauss
+def elim_gauss(matriz):
+    num_linhas = len(matriz)
+    num_colunas = len(matriz[0])
+    
+    for i in range(num_linhas - 1):
+        m = np.zeros((num_linhas - 1 - i,1),dtype=np.float64)
+        for p in range(len(m)):
+            m[p] = matriz[p+i+1,i] / matriz[i,i]
+        for j in range(num_linhas - 1 - i):
+            for k in range(num_colunas):
+                matriz[num_linhas - 1 - j,k] = matriz[num_linhas - 1 - j,k] - (matriz[i,k] * m[len(m) - 1 - j,0])
+                
+    v_forca = matriz[:,-1]
+    matriz_k = matriz[:,:-1]
+    matriz_k_inv = np.linalg.inv(matriz_k)
+    v_desl = matriz_k_inv.dot(v_forca)
+    
+    print("---------------------------------------------------")
+    print("A matriz extendida triangularizada é:\n",matriz)
+    print("---------------------------------------------------")
+    print("O vetor de deslocamentos é:\n",v_desl)
+    print("---------------------------------------------------")
+
+# Gauss-Seidel
+def gauss_seidel(matriz):
+    
+    v_forcas = matriz[:,-1]
+    matriz_k = matriz[:,:-1]
+    v_desl = np.zeros(len(matriz))
+    v_desl_novo = np.zeros(len(matriz))
+    erro = 10**-3
+    condicao = 1
+    
+    while condicao > erro:
+        for i in range(len(matriz)):
+            v_desl_novo[i] = (v_forcas[i] / matriz_k[i,i])
+            for j in range(len(matriz)):
+                if i == j:
+                    pass
+                else:
+                    v_desl_novo[i] -= (matriz_k[i,j] * v_desl_novo[j]) / matriz_k[i,i]
+        condicao = (np.linalg.norm(v_desl_novo - v_desl) / np.linalg.norm(v_desl_novo))
+        v_desl = np.zeros(len(matriz)) + v_desl_novo
+      
+    print("---------------------------------------------------")
+    print("O vetor de deslocamentos é:\n",v_desl_novo)
+    print("---------------------------------------------------")
+    
+
+num_linhas = int(input("Informe o número de linhas da matriz EXTENDIDA: "))
+num_colunas = int(input("Informe o número de colunas da matriz EXTENDIDA: "))
+metodo = int(input("Informe 1 para Eliminação de Gauss e 2 para Gauss-Seidel: "))
+
+if metodo == 1:
+    matriz_ext = cria_matriz_ext(num_linhas, num_colunas)
+    elim_gauss(matriz_ext)
+if metodo == 2:
+    matriz_ext = cria_matriz_ext(num_linhas, num_colunas)
+    gauss_seidel(matriz_ext)
+
+
+
