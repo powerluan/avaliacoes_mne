@@ -1,0 +1,31 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jun  7 15:48:39 2020
+
+@author: Luan Moreira
+"""
+
+import numpy as np
+import math
+
+# Funções modificadas
+def func_modx(x):
+    funcaox = x**2
+    
+    return funcaox
+
+def func_mody(b,y):
+    funcao = b*y
+    
+    return funcao
+    
+numero_pontos = 2
+x1 = - (1 / math.sqrt(3))
+x2 = 1 / math.sqrt(3)
+A1 = 1
+A2 = 1
+b = (func_modx(x1) * A1) + (func_modx(x2) * A2)
+result = (func_mody(b,x1) * A1) + (func_mody(b,x2) * A2)
+
+print("O valor da matriz de rigidez é E*")
+print(result)
