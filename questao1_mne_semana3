@@ -1,0 +1,46 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Sun Jun  7 15:48:39 2020
+
+@author: Luan Moreira
+"""
+
+import numpy as np
+import math
+
+# Funções modificadas
+def func_mod(x):
+    m1 = np.array([[-1/100],[1/100],[0]])
+    m2 = np.array([[-1/100,1/100,0]])
+    m3 = np.array([[0],[-1/80],[1/80]])
+    m4 = np.array([[0,-1/80,1/80]])
+    funcao = ((m1.dot(m2)) * 50) + ((m3.dot(m4)) * (x**2 + 4*x + 4) * 40)
+    
+    return funcao
+    
+numero_pontos = int(input("Informe o número de pontos (1,2 ou 3): "))
+
+if numero_pontos == 1:
+    x = 0
+    A = 2
+    result = func_mod(x) * A
+    print("O valor da matriz de rigidez é E*")
+    print(result)
+if numero_pontos == 2:
+    x1 = - (1 / math.sqrt(3))
+    x2 = 1 / math.sqrt(3)
+    A1 = 1
+    A2 = 1
+    result = (func_mod(x1) * A1) + (func_mod(x2) * A2)
+    print("O valor da matriz de rigidez é E*")
+    print(result)
+if numero_pontos == 3:
+    x1 = - (math.sqrt(3) / math.sqrt(5))
+    x2 = 0
+    x3 = (math.sqrt(3) / math.sqrt(5))
+    A1 = 5 / 9
+    A2 = 8 / 9
+    A3 = 5 / 9
+    result = (func_mod(x1) * A1) + (func_mod(x2) * A2) + (func_mod(x3) * A3)
+    print("O valor da matriz de rigidez é E*")
+    print(result)
