@@ -1,0 +1,22 @@
+import math
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+
+k = 0
+Tx = 900
+h = int(input("Informe o tamanho do passo: "))
+t = 0
+Analítico = 900 * (math.exp(-0.014*t))
+a = pd.DataFrame({'Tx': [900],'Analítico': [Analítico]}, index=[t])
+
+while t < 600:
+    derivada = -0.014 * Tx
+    Tx = Tx + (h * derivada)
+    k += 1
+    t = t + h
+    Analítico = 900 * (math.exp(-0.014*t))
+    b = pd.DataFrame({'Tx': [Tx], 'Analítico': [Analítico]}, index=[t])
+    a = pd.concat([a,b])
+
+a.plot()
